@@ -1,21 +1,11 @@
 import TaskCard from "./TaskCard";
 
-export default function Column({ title, tasks, onDelete, onDrop }) {
+export default function Column({ title, tasks, moveTask }) {
   return (
-    <div
-      className="column"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={onDrop}
-    >
+    <div className="column">
       <h2>{title}</h2>
       {tasks.map((task) => (
-        <div
-          key={task.id}
-          draggable
-          onDragStart={(e) => e.dataTransfer.setData("id", task.id)}
-        >
-          <TaskCard task={task} onDelete={onDelete} />
-        </div>
+        <TaskCard key={task.id} task={task} onMove={moveTask} />
       ))}
     </div>
   );

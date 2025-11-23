@@ -1,19 +1,20 @@
 import { create } from "zustand";
 
 export const useTaskStore = create((set) => ({
-  tasks: [],
-  addTask: (task) =>
+  tasks: [
+    { id: 1, title: "UI設計", progress: 50 },
+    { id: 2, title: "React構築", progress: 0 },
+  ],
+
+  addTask: (title) =>
     set((state) => ({
-      tasks: [...state.tasks, { ...task, id: Date.now() }],
+      tasks: [...state.tasks, { id: Date.now(), title, progress: 0 }],
     })),
-  updateStatus: (id, status) =>
+
+  updateProgress: (id, progress) =>
     set((state) => ({
       tasks: state.tasks.map((t) =>
-        t.id === id ? { ...t, status } : t
+        t.id === id ? { ...t, progress: Number(progress) } : t
       ),
-    })),
-  removeTask: (id) =>
-    set((state) => ({
-      tasks: state.tasks.filter((t) => t.id !== id),
     })),
 }));

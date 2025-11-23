@@ -1,40 +1,29 @@
 import { useState } from "react";
 
-export default function TaskModal({ onClose, onSubmit }) {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+export default function TaskModal({ isOpen, close, addTask }) {
+  const [input, setInput] = useState("");
+
+  if (!isOpen) return null;
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <h3>Add Task</h3>
-
+    <div className="modal">
+      <div className="modal-content">
+        <h3>新しいタスク</h3>
         <input
-          placeholder="Task title..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          placeholder="タスク名"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
-
-        <textarea
-          placeholder="Details..."
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-        />
-
-        <div className="modal-actions">
-          <button onClick={onClose} className="cancel">
-            Cancel
-          </button>
-          <button
-            className="submit"
-            onClick={() => {
-              onSubmit({ title, description: desc, status: "todo" });
-              onClose();
-            }}
-          >
-            Add
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            addTask(input);
+            setInput("");
+            close();
+          }}
+        >
+          追加
+        </button>
+        <button onClick={close}>閉じる</button>
       </div>
     </div>
   );
